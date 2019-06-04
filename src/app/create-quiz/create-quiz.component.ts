@@ -20,7 +20,6 @@ export class CreateQuizComponent implements OnInit {
 
   saveQuiz() {
     // console.log(this.createQuiz.value);
-    
     // save a user who created this quiz.
     // hardcode a user until we have a proper login.
     let quiz = this.createQuiz.value as Quiz;
@@ -44,11 +43,7 @@ export class CreateQuizComponent implements OnInit {
       // this.quizActions.createQuizFailed(error);
     });
     console.log("2");
-
-    
-    // this.data.saveQuiz(quiz);
-    
-    
+    // this.data.saveQuiz(quiz);    
   }
 
   createNewQuestion() {
@@ -61,17 +56,29 @@ export class CreateQuizComponent implements OnInit {
     const options = question.controls.options as FormArray;
     options.push(this.createNewOptionGroup());
     options.push(this.createNewOptionGroup());
-    // console.log(options);
     questions.push(question);
+  }
+  removeQuestion(questionIndex: number) {
+    const questions = this.createQuiz.controls.questions as FormArray;
+    questions.removeAt(questionIndex);
+    console.log(questions)
   }
   createNewOption(questionIndex: number){
     const option = this.createNewOptionGroup();
     const questions = this.createQuiz.controls.questions as FormArray;
-    // console.log(questions);
+
     const options = (<FormArray>questions.controls[questionIndex]).controls['options'] as FormArray;
-    // console.log(options);
+    console.log(option);
     options.push(option);
   }
+
+  removeOption(questionIndex: number, optionIndex: number) {
+    const questions = this.createQuiz.controls.questions as FormArray;
+    const options = (<FormArray>questions.controls[questionIndex]).controls['options'] as FormArray;
+    console.log(options);
+    options.removeAt(optionIndex);
+  }
+
   private createNewOptionGroup(): FormGroup {
     return this.fb.group({
       answer: ['', Validators.required],
@@ -84,14 +91,6 @@ export class CreateQuizComponent implements OnInit {
     this.createQuiz = this.fb.group({
       title: [''],
       questions: this.fb.array([]),
-      // question1: [''],  // We want a dynamic form and not this!
-      // option1_1: [''],
-      // option1_2: [''],
-      // option1_3: [''],
-      // question2: [''],
-      // option2_1: [''], 
-      // option2_2: [''], 
-      // option2_3: [''], 
     })
   }
 }
