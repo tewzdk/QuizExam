@@ -1,4 +1,4 @@
-<mat-card class="example-card" (click)="emitQuizClicked()">
+<mat-card class="example-card" class="example-card" (click)="emitQuizClicked()">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{quizInput.title | uppercase}}</mat-card-title>
@@ -11,8 +11,6 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-button routerLink="../display-quiz/{{quizInput._id}}">Start Quiz</button>
+    <button mat-button (click)="openDialog()">Remove Quiz</button>
   </mat-card-actions>
 </mat-card>
-
-{{ 0.743 | percent }}
-{{ 132 | currency }}

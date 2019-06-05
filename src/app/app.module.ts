@@ -15,6 +15,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatSnackBarModule, MatCheckboxModule } from '@angular/material';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
@@ -31,10 +32,14 @@ import { QuizComponent } from './quiz/quiz.component';
 import { AppState } from './store';
 import { NgRedux, NgReduxModule, DevToolsExtension } from '@angular-redux/store';
 import { NgReduxRouter, NgReduxRouterModule } from '@angular-redux/router';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 import { rootReducer } from './store';
 import { QuizPipe } from './quiz.pipe';
 import { httpInterceptorProviders } from './http-interceptors';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +56,7 @@ import { httpInterceptorProviders } from './http-interceptors';
     CreateQuizComponent,
     QuizComponent,
     QuizPipe,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -60,10 +66,15 @@ import { httpInterceptorProviders } from './http-interceptors';
     BrowserAnimationsModule,
     HttpClientModule,
     NgReduxModule,   NgReduxRouterModule.forRoot(),
-    MatGridListModule, MatMenuModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatCardModule, MatDividerModule, MatExpansionModule, MatCheckboxModule
+    MatGridListModule, MatRadioModule, MatMenuModule, 
+    MatProgressSpinnerModule, MatIconModule, MatToolbarModule, 
+    MatButtonModule, MatFormFieldModule, MatInputModule, 
+    MatSnackBarModule, MatCardModule, MatDividerModule, 
+    MatExpansionModule, MatCheckboxModule, MatDialogModule
   ],
   providers: [httpInterceptorProviders],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent]
 })
 export class AppModule {
   constructor(private ngRedux: NgRedux<AppState>,

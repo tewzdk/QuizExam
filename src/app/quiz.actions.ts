@@ -17,20 +17,34 @@ constructor (
   static GET_QUIZZES_LOADING: string = 'GET_QUIZZES_LOADING';
   static GET_QUIZZES_SUCCESS: string = 'GET_QUIZZES_SUCCESS';
   static GET_QUIZZES_FAILED: string = 'GET_QUIZZES_FAILED';
+  static GET_QUIZ: string = 'GET_QUIZ';
 
   static CREATE_RATING: string = 'CREATE_RATING'; 
 
+  getQuiz(quizId: string)  : void {
+    this.ngRedux.dispatch({
+      type: QuizActions.GET_QUIZ,
+      payload: {quizId}
+    });
+  }
 
+  removeQuiz(quizId: string) : void {
+    this.ngRedux.dispatch({
+      type: QuizActions.DELETE_QUIZ,
+      payload: {quizId}
+    });
+  }
   getQuizzes() : void {
     this.ngRedux.dispatch({ type: QuizActions.GET_QUIZZES_LOADING }); // start a "spinner"
 
     // call the ws
     this.api.getAllQuizzes().subscribe(quizzes => {
       console.log(quizzes);
-      console.log(quizzes.filter(quiz => quiz.customerId === 'chrk3'));
+      console.log('Hello Svend')
+      console.log(quizzes.filter(quiz => quiz.customerId === 'vape'));
       this.ngRedux.dispatch({
         type: QuizActions.GET_QUIZZES_SUCCESS,
-        payload: quizzes.filter(quiz => quiz.customerId === 'chrk3')
+        payload: quizzes.filter(quiz => quiz.customerId === 'vape')
       })
     }, error => {
       this.ngRedux.dispatch({
@@ -59,11 +73,10 @@ constructor (
 
   setLoggedIn(isLoggedIn: boolean): void {
     console.log(isLoggedIn);
-    
     this.ngRedux.dispatch({
       type: QuizActions.LOG_IN,
       payload: isLoggedIn
-    })
+    });
 
   }
 }

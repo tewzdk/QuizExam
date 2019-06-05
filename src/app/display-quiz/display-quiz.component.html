@@ -1,10 +1,26 @@
+<br>
 
-<div >
-  Quiz title: {{quiz.title}}
+<div class="example-card">
+<mat-card>
+    <mat-card-title>{{quiz.title | uppercase}}</mat-card-title>
+    <mat-radio-group aria-label="Select an option" class="example-radio-group" *ngFor="let question of quiz.questions">
+        <mat-card-subtitle>{{question.title}}</mat-card-subtitle>
+        <mat-radio-button *ngFor="let option of question.options" class="example-radio-button" (change)="picked($event)" value="{{option.correct}}">{{option.answer}}</mat-radio-button>
+        <div>Your favorite season is: {{answer}}</div>
+        <button mat-raised-button color="primary" (click)="quizComplete()">Finish quiz!</button>
+      </mat-radio-group>
+    
+</mat-card>
 </div>
+<!--
+<mat-card-header>
+<div >
+    <mat-card-title>Quiz title: {{quiz.title | uppercase}}</mat-card-title>
+</div>
+</mat-card-header>
 
 <div *ngFor="let question of quiz.questions">
-  {{question.title}}
+    <mat-card-subtitle>{{question.title}}</mat-card-subtitle>
 
   <div *ngFor="let option of question.options">
     {{option.answer}}
@@ -13,3 +29,6 @@
   <br>
 </div>
 
+
+
+-->
