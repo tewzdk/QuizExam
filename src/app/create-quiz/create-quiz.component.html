@@ -16,7 +16,7 @@
     <div *ngFor="let questionControl of createQuiz.controls.questions.controls; let i=index">
       <div [formGroupName]="i">
           <mat-form-field >
-            <input matInput placeholder="Question" formControlName="title">
+            <input matInput placeholder="Question" formControlName="title" tabindex="i">
           </mat-form-field>
         
           <button type="button" mat-raised-button color="secondary" (click)="createNewOption(i)">New Option</button>
@@ -26,7 +26,7 @@
               <div *ngFor="let optionControl of questionControl.controls.options.controls; let j=index">
                   <div [formGroupName]="j">
                     <mat-form-field>
-                      <input matInput placeholder="Option" formControlName="answer">
+                      <input matInput placeholder="Option" formControlName="answer" tabindex="j">
                     </mat-form-field>
                     <mat-checkbox formControlName="correct">Correct answer</mat-checkbox>
                     <button type="button" class="left-padding" mat-button color="warn" (click)="removeOption(i,j)">Delete Option</button>

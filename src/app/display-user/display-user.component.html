@@ -1,0 +1,19 @@
+<div class="example-card">
+  <mat-card>
+    <mat-card-title>Profile</mat-card-title>
+    <div>
+      <p>Name: {{user?.fullname}}</p>
+    </div>
+
+    <div>
+      <p>Gender: {{user?.gender | titlecase}}</p>
+    </div>
+    <div>
+      <p>Email: {{user?.email}}</p>
+    </div>
+    <div>
+      <p>Birthdate: {{user?.birthdate.seconds * 1000 | date:'dd-MM-yyyy' }}</p>
+    </div>
+
+  </mat-card>
+</div>

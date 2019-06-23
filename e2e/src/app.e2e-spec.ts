@@ -19,14 +19,18 @@ describe('workspace-project App', () => {
   });
 
   it('login by filling out username and password, landing page afterwards', () => {
-    element(by.id('username')).sendKeys('admin');
-    element(by.id('password')).sendKeys('admin');
+    element(by.id('username')).sendKeys('tewzdk@gmail.com');
+    element(by.id('password')).sendKeys('111111');
     
     element(by.id('submitLogin')).click();
-    
     // Cleaner way to check that you are in the right place.
     expect(browser.getCurrentUrl()).toContain('/portal/display-quizzes');
+  });
 
+  it('go to', () => {
+    element(by.id('startquiz')).click();
+
+    expect(browser.getCurrentUrl()).toContain('/portal/display-quiz');
   });
 
   afterEach(async () => {

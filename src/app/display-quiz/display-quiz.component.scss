@@ -1,7 +1,9 @@
 .example-card {
-    width: 600px;
-    margin: auto;
-  }
+  padding-top: 30px;
+  margin-top: 10px;
+  max-width: 400px;
+  margin: auto;
+}
   
   .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
@@ -26,5 +28,6 @@
 ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color:rgb(172, 7, 194)!important; /*outer ring color change*/
 }
+
 
   

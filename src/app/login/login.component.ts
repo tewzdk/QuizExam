@@ -20,6 +20,14 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.authService.eventAuthError$.subscribe( data => {
+
+      if(data){
+        this.snackBar.open(data,'close',{duration: 3000})
+      }
+    });
+
     this.loginForm = this.fb.group(
       {
         username: ['', [Validators.required, Validators.minLength(3)]], // multiple validators
@@ -32,26 +40,19 @@ export class LoginComponent implements OnInit {
     this.snackBar.open('One second, logging in..', 'Close', {
       duration: 2000,
     });
-
-    
-
-    
     console.log(this.loginForm);
 
     if (this.loginForm.valid) {
-      // test
+      this.authService.login2(this.loginForm.value.username,this.loginForm.value.password);
       this.quizActions.setLoggedIn(true);
-      
-      
-      
       // Send the data to the server to verify the user login
       // navigate after successful login.
+    }
       if (this.loginForm.value.username === 'admin') {
         //log in as admin
         
       }
-  
-    
+      /*
       console.log("First");
       this.authService.login().subscribe(result => {
         console.log("Third");
@@ -65,6 +66,7 @@ export class LoginComponent implements OnInit {
       // Show error message or something else.
 
     }
+      */
 
   }
 

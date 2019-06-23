@@ -27,8 +27,8 @@ export class TempDataService {
     return [
       { 
         _id: '1', visible: false, user: {
-          _id:'1',username: 'mikkel86', email: 'mik@mikkel.dk', gender: Gender.MALE,
-          birthDate: new Date(1986,0,1)
+          _id:'1',fullname: 'mikkel86', email: 'mik@mikkel.dk', gender: Gender.MALE,
+          birthdate: new Date(1986,0,1)
         }, title: 'Dogs', created: new Date(2019,2,1),
         questions: [
           {title: 'How many feet does a puddle have?', 
@@ -49,8 +49,8 @@ export class TempDataService {
       },
       {
         _id: '2', visible: true, user: {
-          _id:'1',username: 'veronique', email: 'vero@veronique.dk', gender: Gender.FEMALE,
-          birthDate: new Date(1994,0,1)
+          _id:'1',fullname: 'veronique', email: 'vero@veronique.dk', gender: Gender.FEMALE,
+          birthdate: new Date(1994,0,1)
         }, title: 'Veroniques quiz', created: new Date(2019, 3, 19),
         questions: [ 
           { title: 'How old are Veronique',
@@ -69,8 +69,8 @@ export class TempDataService {
   getQuiz() : Quiz {
     return { 
       _id: '1', visible: false, user: {
-        _id:'1',username: 'veronique', email: 'vero@veronique.dk', gender: Gender.FEMALE,
-        birthDate: new Date(1994,0,1)
+        _id:'1',fullname: 'veronique', email: 'vero@veronique.dk', gender: Gender.FEMALE,
+        birthdate: new Date(1994,0,1)
       }, title: 'Dogs', 
       questions: [
         {title: 'How many feet does a puddle have?', 

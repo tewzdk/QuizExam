@@ -4,8 +4,13 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { TempDataService } from '../service/temp-data.service';
 import { Quiz } from '../entities/quiz';
 import { Router } from '@angular/router';
-import { Gender } from '../entities/user';
+import { Gender, User} from '../entities/user';
 import { QuizActions } from '../quiz.actions';
+import { NgRedux } from '@angular-redux/store';
+import { AppState } from '../store';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from '../auth/auth.service';
+
 
 @Component({
   selector: 'app-create-quiz',
@@ -14,22 +19,31 @@ import { QuizActions } from '../quiz.actions';
 })
 export class CreateQuizComponent implements OnInit {
   createQuiz: FormGroup;
+  user: User;
+  isLoading: boolean;
 
   constructor(private fb: FormBuilder, private data: TempDataService,
-    private router: Router, private quizActions: QuizActions, private quizApi: QuizApiService) { }
+    private router: Router, private quizActions: QuizActions, private quizApi: QuizApiService,
+    private ngRedux: NgRedux<AppState>, private authService: AuthService
+    ) { 
+
+      
+    }
 
   saveQuiz() {
     // console.log(this.createQuiz.value);
     // save a user who created this quiz.
     // hardcode a user until we have a proper login.
+
     let quiz = this.createQuiz.value as Quiz;
     quiz.user = {  // Hardcoded. We remove when we have a proper login
-      _id: '1', 
-      username: 'Veronique', 
-      email: 'v@ve.dk', 
-      gender: Gender.FEMALE, 
-      birthDate: undefined 
+      _id: this.user._id, 
+      fullname: this.user.fullname, 
+      email: this.user.email, 
+      gender: this.user.gender, 
+      birthdate: this.user.birthdate 
     };
+    quiz.ratings = [];
 
     console.log("1");
     this.quizApi.createQuiz(quiz).subscribe(quizFromWs => {
@@ -58,11 +72,13 @@ export class CreateQuizComponent implements OnInit {
     options.push(this.createNewOptionGroup());
     questions.push(question);
   }
+
   removeQuestion(questionIndex: number) {
     const questions = this.createQuiz.controls.questions as FormArray;
     questions.removeAt(questionIndex);
     console.log(questions)
   }
+
   createNewOption(questionIndex: number){
     const option = this.createNewOptionGroup();
     const questions = this.createQuiz.controls.questions as FormArray;
@@ -92,5 +108,12 @@ export class CreateQuizComponent implements OnInit {
       title: [''],
       questions: this.fb.array([]),
     })
+    
+    this.authService.getUser().subscribe(user =>{
+      this.user = user;
+      console.log(user)
+    });
+
+
   }
 }

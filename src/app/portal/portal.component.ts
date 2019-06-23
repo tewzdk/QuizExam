@@ -7,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./portal.component.scss', './../app.component.scss']
 })
 export class PortalComponent implements OnInit {
+  user: firebase.User;
 
-  // constructor(private authService: AuthService) { }
+  constructor(private auth: AuthService){
+
+  }
 
   ngOnInit() {
+    this.auth.getUserState()
+    .subscribe( user => {
+      this.user = user;
+    })
+  }
+
+  logout() {
+    this.auth.logout2();
   }
 
 }

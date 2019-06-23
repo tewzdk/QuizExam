@@ -4,7 +4,7 @@ import { tassign } from 'tassign';
 import { TempDataService } from './service/temp-data.service';
 
 let temp = new TempDataService();
-const INITIAL_STATE: QuizState = { isLoggedIn: false, quizzes: [], isLoading: false, quiz: null }
+const INITIAL_STATE: QuizState = { isLoggedIn: false, quizzes: [], isLoading: false, quiz: null, user: null }
 
 export function quizReducer(state: QuizState = INITIAL_STATE, action: any) {
   switch (action.type) {
@@ -24,6 +24,18 @@ export function quizReducer(state: QuizState = INITIAL_STATE, action: any) {
     case QuizActions.GET_QUIZZES_FAILED:
       return tassign(state, { isLoading: false });
 
+    case QuizActions.GET_USER_LOADING:
+        return tassign(state, { isLoading: true });
+
+    case QuizActions.GET_USER_FAILED:
+        return tassign(state, { isLoading: false });
+
+    case QuizActions.GET_USER:
+      return tassign(state, {user: action.payload });
+
+    case QuizActions.SET_USER:
+      return tassign(state, {user: action.payload});
+
     case QuizActions.CREATE_QUIZ:
       // Create a copy of the array with the original quiz objects + action.payload.
       // return a new state object.
@@ -42,16 +54,15 @@ export function quizReducer(state: QuizState = INITIAL_STATE, action: any) {
       // How to add an object to an array within an object in an array.
 
       // //Perhaps this works? 30% chance of working...
-      let quizToUpdate = state.quizzes.find(quiz => quiz._id === action.payload.quizId);
-      let pos = state.quizzes.findIndex(quiz => quiz._id === action.payload.quizId);
-
-      let ratingArr = [...quizToUpdate.ratings, action.payload.quiz];
-      let quizArray = [...state.quizzes.slice(0, pos), quizToUpdate, ...state.quizzes.slice(pos + 1)];
-      quizArray[pos].ratings = ratingArr;
-
-      console.log("ratingArr", ratingArr);
-      console.log("quizArray", quizArray);
-
+      let quizToUpdate = state.quizzes.find(quiz => quiz._id === action.payload.quiz._id);
+      let pos = state.quizzes.findIndex(quiz => quiz._id === action.payload.quiz._id);
+      //console.log("payload", action.payload.rating)
+      //let ratingArr = [...quizToUpdate.ratings, action.payload.rating];
+      
+      let quizArray = [...state.quizzes.slice(0, pos), action.payload.quiz, ...state.quizzes.slice(pos + 1)];
+      //quizArray[pos].ratings = ratingArr;
+      //console.log("ratingArr", ratingArr);
+      //console.log("ratings", quizArray[pos].ratings)
       return tassign(state, { quizzes: quizArray });
 
     case QuizActions.UPDATE_QUIZ:
@@ -69,19 +80,14 @@ export function quizReducer(state: QuizState = INITIAL_STATE, action: any) {
 
 
     case QuizActions.LOG_IN:
-      console.log(action);
       return tassign(state, { isLoggedIn: action.payload });
 
     // state.isLoggedIn = action.payload; // No No! You cannot modify state in Redux!
     // return state;
-
     // Make a copy of the state
     // Change isLoggedIn variable in the copy.
     // Shallow copy of the state object and changes isLoggedIn of the copy.
     // return Object.assign({}, state, { isLoggedIn: action.payload });
-
-
-
     default:
       return state;
   }

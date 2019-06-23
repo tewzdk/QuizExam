@@ -1,3 +1,86 @@
-<p>
-  register works!
-</p>
+<mat-grid-list cols="4" rowHeight="500px">
+  <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title  id="registration">User Registration</mat-card-title>
+        </mat-card-header>
+        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+        <mat-card-content>
+
+
+          <div>
+            <mat-form-field>
+              <!-- <p>fullName</p> -->
+              <input matInput id="fullName" placeholder="Full Name" formControlName="fullName">
+
+              <mat-error *ngIf="registerForm.controls.fullName.errors?.required && registerForm.controls.fullName.touched">
+                You must write your full name
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls.fullName.errors?.minlength && registerForm.controls.fullName.touched">
+                Name is too short
+              </mat-error>
+            </mat-form-field>
+            <!-- <input type="text" formControlName="firstName"> -->
+          </div>
+
+          <div>
+            <mat-form-field>
+              <!-- <p>Email</p> -->
+              <input matInput placeholder="Email" type="email" formControlName="email">
+              <mat-error *ngIf="registerForm.controls.email.errors?.required && registerForm.controls.email.touched">
+                You must fill out email field
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls.email.errors?.email && registerForm.controls.email.touched">
+                You must fill in a valid email address
+              </mat-error>
+            </mat-form-field>
+            <!-- <input type="text" formControlName="email"> -->
+          </div>
+
+          <div>
+            <mat-form-field>
+              <!-- <p>Password</p> -->
+              <input matInput placeholder="Password" type="password" formControlName="password">
+              <mat-error *ngIf="!registerForm.controls.password.valid && registerForm.controls.password.dirty">
+                You must fill out the password
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Gender</mat-label>
+              <select matNativeControl required formControlName="gender">
+                <option value="FEMALE">Female</option>
+                <option value="MALE">Male</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="birthDate">
+              
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <button mat-raised-button color="primary" id="submitRegister" type="submit"
+            [disabled]="!registerForm.valid">Create</button>
+          <!-- Dont do this. Disabling a button is ok but only with user feedback! -->
+
+        </mat-card-content>
+        
+        
+      </mat-card>
+
+    </form>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+
+</mat-grid-list>

@@ -1,12 +1,11 @@
 export class User {
-  _id: string;
-  username: string;
-  password?: string;
-  email: string;
-  gender: Gender; 
-  birthDate: Date;
+  _id?: string;
+  fullname?: string;
+  email?: string;
+  gender?: Gender; 
+  birthdate?: Date;
 }
 
 export enum Gender {
-  MALE, FEMALE, OTHER
+  MALE = "Male", FEMALE = "Female", OTHER = "Other"
 }

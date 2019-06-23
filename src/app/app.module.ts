@@ -1,7 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { BarRatingModule } from 'ngx-bar-rating';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -34,12 +34,20 @@ import { NgRedux, NgReduxModule, DevToolsExtension } from '@angular-redux/store'
 import { NgReduxRouter, NgReduxRouterModule } from '@angular-redux/router';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDialogModule} from '@angular/material/dialog';
-
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';
 import { rootReducer } from './store';
 import { QuizPipe } from './quiz.pipe';
 import { httpInterceptorProviders } from './http-interceptors';
 import { DialogComponent } from './dialog/dialog.component';
+import { environment } from 'src/environments/environment';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth.guard';
+import { DisplayUserComponent } from './display-user/display-user.component';
 
 @NgModule({
   declarations: [
@@ -56,25 +64,30 @@ import { DialogComponent } from './dialog/dialog.component';
     CreateQuizComponent,
     QuizComponent,
     QuizPipe,
-    DialogComponent
-  ],
+    DialogComponent,
+    DisplayUserComponent
+      ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule,
+    HttpClientModule, BarRatingModule,
     NgReduxModule,   NgReduxRouterModule.forRoot(),
     MatGridListModule, MatRadioModule, MatMenuModule, 
     MatProgressSpinnerModule, MatIconModule, MatToolbarModule, 
     MatButtonModule, MatFormFieldModule, MatInputModule, 
     MatSnackBarModule, MatCardModule, MatDividerModule, 
-    MatExpansionModule, MatCheckboxModule, MatDialogModule
+    MatExpansionModule, MatCheckboxModule, MatDialogModule, 
+    MatSelectModule, MatDatepickerModule, MatNativeDateModule,
+    AngularFireModule.initializeApp( environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, MatDatepickerModule, AuthGuard, AuthService,NgReduxModule],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent]
+  entryComponents: [DialogComponent]  
 })
 export class AppModule {
   constructor(private ngRedux: NgRedux<AppState>,

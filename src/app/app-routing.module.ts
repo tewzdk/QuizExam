@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { PortalComponent } from './portal/portal.component';
 import { DisplayQuizzesComponent } from './display-quizzes/display-quizzes.component';
 import { CreateQuizComponent } from './create-quiz/create-quiz.component';
+import { DisplayUserComponent } from './display-user/display-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home/login', pathMatch: 'full' }, // if baseUrl => go to login
@@ -19,13 +20,16 @@ const routes: Routes = [
     {path: 'about', component: AboutComponent},
     {path: 'contact', component: ContactComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent}
+    {path: 'register', component: RegisterComponent},
+    {path: '**', component: PageNotFoundComponent }
   ]},
   
-  {path: 'portal', component:PortalComponent, /*canActivate: [AuthGuard],*/ children: [
+  {path: 'portal', component:PortalComponent, canActivate: [AuthGuard], children: [
     {path: 'display-quiz/:id', component:DisplayQuizComponent},  
     {path: 'create-quiz', component:CreateQuizComponent},  
-    {path: 'display-quizzes', component:DisplayQuizzesComponent},  
+    {path: 'display-quizzes', component:DisplayQuizzesComponent}, 
+    {path: 'display-user',component:DisplayUserComponent},
+    {path: '**', component: PageNotFoundComponent }
   ]},
   
 
